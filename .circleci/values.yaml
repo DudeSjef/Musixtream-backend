@@ -1,0 +1,4 @@
+agent:
+  resourceClasses:
+    namespace/my-rc:
+      token: 23f6f5c4262ff0b70cd0437435dde4194a6f56a0f9968753063e8f4d04ebc588a55c11f295950b2b

@@ -2,7 +2,14 @@
 # Stacks detected: deps:java:.,tool:gradle:
 version: 2.1
 jobs:
-  test-java:
+  build:
+    docker:
+      - image: cimg/base:2021.11
+    resource_class: daan/musixtream
+    steps:
+      - checkout
+      - run: echo "Hi I'm on a Container Runner!"
+  test:
     docker:
       - image: cimg/openjdk:21.0
     steps:
@@ -34,9 +41,12 @@ jobs:
           name: deploy
           command: '#e.g. ./deploy.sh'
 workflows:
-  build-and-test:
+  build:
     jobs:
-      - test-java
+      - build
+  test:
+    jobs:
+      - test
     # - deploy:
     #     requires:
     #       - test-java
