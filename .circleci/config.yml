@@ -52,7 +52,11 @@ jobs:
           name: Store artifacts
           path: build/reports
   deploy:
+    docker:
+      - image: cimg/openjdk:21.0.2
+    resource_class: daan/musixtream
     steps:
+      - checkout
       - run:
           name: Deploy to Minikube
           command: |
