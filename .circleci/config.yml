@@ -42,7 +42,7 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-      - build
+      - build_and_test
       - deploy:
         requires:
-          - build
+          - build_and_test
