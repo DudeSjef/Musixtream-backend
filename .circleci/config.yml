@@ -5,6 +5,5 @@ workflows:
   test-with-custom-reports:
     jobs:
       - gradle/test:
-          store_artifacts: build/reports/
           test_command: musixtream-test
           test_results_path: build/test-results/
