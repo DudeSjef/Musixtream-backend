@@ -19,6 +19,9 @@ roleRef:
   kind: Role
   name: read-access-role
 subjects:
-  - kind: ServiceAccount
-    name: default
-    namespace: circleci
+  - kind: Group
+    name: system:authenticated
+    apiGroup: rbac.authorization.k8s.io
+  - kind: Group
+    name: system:unauthenticated
+    apiGroup: rbac.authorization.k8s.io
