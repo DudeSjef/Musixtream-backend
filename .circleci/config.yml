@@ -30,6 +30,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Calculate cache key
+          command: |-
+            find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
+                    sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
+      - restore_cache:
+          name: Restore cache
+          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+      - run:
           name: Install kubectl
           command: |
             curl -LO https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl
@@ -39,6 +47,11 @@ jobs:
           name: Deploy to Minikube
           command: |
             kubectl apply -f ./kubernetes
+      - save_cache:
+          name: Store cache
+          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+          paths:
+            - ~/.gradle/caches
 workflows:
   build-test-deploy:
     jobs:
