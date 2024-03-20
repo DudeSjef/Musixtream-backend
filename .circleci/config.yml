@@ -44,6 +44,9 @@ jobs:
             chmod +x ./kubectl
             sudo mv ./kubectl /usr/local/bin/kubectl
       - run:
+          name: Kubectl get pods
+          command: kubectl get pods
+      - run:
           name: Deploy to Minikube
           command: |
             kubectl apply -f ./kubernetes
