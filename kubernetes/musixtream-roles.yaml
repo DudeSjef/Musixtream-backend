@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: musixtream
+  name: read-access-role
+rules:
+  - apiGroups: ["apps", ""]
+    resources: ["deployments", "services", "namespaces"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-access-binding
+  namespace: musixtream
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: read-access-role
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: circleci
