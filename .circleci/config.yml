@@ -25,7 +25,7 @@ jobs:
             - ~/.gradle/caches
   deploy:
     docker:
-      - image: cimg/openjdk:21.0.2
+      - image: gcr.io/google-containers/tools:latest
     resource_class: daan/musixtream
     steps:
       - checkout
@@ -37,12 +37,12 @@ jobs:
       - restore_cache:
           name: Restore cache
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-      - run:
-          name: Install kubectl
-          command: |
-            curl -LO https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl
-            chmod +x ./kubectl
-            sudo mv ./kubectl /usr/local/bin/kubectl
+#      - run:
+#          name: Install kubectl
+#          command: |
+#            curl -LO https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl
+#            chmod +x ./kubectl
+#            sudo mv ./kubectl /usr/local/bin/kubectl
       - run:
           name: Kubectl get pods
           command: kubectl get pods
