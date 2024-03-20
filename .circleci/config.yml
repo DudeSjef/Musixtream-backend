@@ -1,7 +1,7 @@
 #file: noinspection YAMLSchemaValidation
 version: 2.1
 jobs:
-  build:
+  build_and_test:
     docker:
       - image: cimg/openjdk:21.0.2
     resource_class: daan/musixtream
@@ -23,40 +23,18 @@ jobs:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
             - ~/.gradle/caches
-  test:
-    docker:
-      - image: cimg/openjdk:21.0.2
-    resource_class: daan/musixtream
-    steps:
-      - checkout
-      - run:
-          name: Calculate cache key
-          command: |-
-            find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
-                    sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
-      - restore_cache:
-          name: Restore cache
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-      - run:
-          name: Gradle check
-          command: ./gradlew check
-      - store_test_results:
-          name: Store test results
-          path: build/test-results
-      - save_cache:
-          name: Store cache
-          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
-          paths:
-            - ~/.gradle/caches
-      - store_artifacts:
-          name: Store artifacts
-          path: build/reports
   deploy:
     docker:
       - image: cimg/openjdk:21.0.2
     resource_class: daan/musixtream
     steps:
       - checkout
+      - run:
+          name: Install kubectl
+          command: |
+            curl -LO https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            sudo mv ./kubectl /usr/local/bin/kubectl
       - run:
           name: Deploy to Minikube
           command: |
@@ -65,5 +43,6 @@ workflows:
   build-test-deploy:
     jobs:
       - build
-      - test
-      - deploy
+      - deploy:
+        requires:
+          - build
