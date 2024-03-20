@@ -13,10 +13,13 @@ jobs:
             find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
                     sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
       - restore_cache:
+          name: Restore cache
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
       - run:
+          name: Grade build
           command: ./gradlew clean build
       - save_cache:
+          name: Store cache
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
             - ~/.gradle/caches
@@ -32,21 +35,35 @@ jobs:
             find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
                     sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
       - restore_cache:
+          name: Restore cache
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
       - run:
+          name: Gradle check
           command: ./gradlew check
       - store_test_results:
+          name: Store test results
           path: build/test-results
       - save_cache:
+          name: Store cache
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
             - ~/.gradle/caches
       - store_artifacts:
+          name: Store artifacts
           path: build/reports
+  deploy:
+    steps:
+      - run:
+          name: Deploy to Minikube
+          command: |
+            kubectl apply -f ./kubernetes
 workflows:
-  build:
+  build-test-deploy:
     jobs:
       - build
       - test:
-          requires:
-            - build
+        requires:
+          - build
+      - deploy:
+        requires:
+          - test
