@@ -6,7 +6,7 @@ metadata:
 rules:
   - apiGroups: ["apps", ""]
     resources: ["deployments", "services", "namespaces"]
-    verbs: ["get", "list", "watch"]
+    verbs: ["get", "list", "watch", "create", "update", "delete"]
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -19,9 +19,6 @@ roleRef:
   kind: Role
   name: read-access-role
 subjects:
-  - kind: Group
-    name: system:authenticated
-    apiGroup: rbac.authorization.k8s.io
-  - kind: Group
-    name: system:unauthenticated
-    apiGroup: rbac.authorization.k8s.io
+  - kind: ServiceAccount
+    name: default
+    namespace: circleci
