@@ -2,13 +2,13 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/openjdk:21.0
+      - image: cimg/base:latest
     resource_class: daan/musixtream
     steps:
       - checkout
   test:
     docker:
-      - image: cimg/openjdk:21.0
+      - image: cimg/base:latest
     resource_class: daan/musixtream
     steps:
       - checkout
