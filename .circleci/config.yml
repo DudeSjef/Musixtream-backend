@@ -44,9 +44,9 @@ jobs:
           install-kubectl: true
           perform-login: true
           resource-group: << parameters.resource-group >>
-            - kubernetes/create-or-update-resource:
-                resource-file-path: manifests/$APP_NAME.yaml
-                resource-name: kustomization/$APP_NAME
+      - kubernetes/create-or-update-resource:
+          resource-file-path: manifests/$APP_NAME.yaml
+          resource-name: kustomization/$APP_NAME
 
 workflows:
   build-test-deploy:
