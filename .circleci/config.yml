@@ -53,5 +53,7 @@ workflows:
     jobs:
       - build_and_test
       - aks-deploy:
+          cluster-name: $CLUSTER_NAME
+          resource-group: $RESOURCE_GROUP
           requires:
             - build_and_test
