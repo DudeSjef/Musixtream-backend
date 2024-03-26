@@ -95,8 +95,8 @@ jobs:
             git config user.email "$GITHUB_EMAIL"
             git config user.name "CircleCI User"
             git checkout $CIRCLE_BRANCH           
-            git add manifests/$APP_NAME.yaml
-            git add manifests/kustomization.yaml
+            git add kubernetes/$APP_NAME.yaml
+            git add kubernetes/kustomization.yaml
             git commit -am "Bumps docker tag [skip ci]"
             git push origin $CIRCLE_BRANCH
 
