@@ -7,5 +7,5 @@ resources:
 namespace: musixtream
 images:
 - name: musixtream-backend
-  newName: /musixtream-backend
+  newName: dudesjef/musixtream-backend
   newTag: latest
