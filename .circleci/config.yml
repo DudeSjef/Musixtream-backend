@@ -86,6 +86,10 @@ workflows:
     jobs:
       - build_and_test
       - docker/publish:
+          before_build:
+            - run:
+                name: Grade build
+                command: ./gradlew clean build
           image: $DOCKER_LOGIN/$APP_NAME
           tag: $CIRCLE_SHA1,latest
           requires:
