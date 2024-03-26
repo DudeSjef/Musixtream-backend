@@ -45,8 +45,8 @@ jobs:
           perform-login: true
           resource-group: << parameters.resource-group >>
       - kubernetes/create-or-update-resource:
-          resource-file-path: kubernetes/$APP_NAME.yaml
-          resource-name: kustomization/$APP_NAME
+          resource-file-path: ../kubernetes
+          resource-name: $APP_NAME
 
 workflows:
   build-test-deploy:
@@ -55,3 +55,5 @@ workflows:
       - aks-deploy:
           cluster-name: $CLUSTER_NAME
           resource-group: $RESOURCE_GROUP
+          requires:
+            - build_and_test
