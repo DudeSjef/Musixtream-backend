@@ -3,13 +3,13 @@ kind: Namespace
 metadata:
   labels:
     name: musixtream
-  name: musixtream
+  name: nodejs
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: musixtream
-  namespace: musixtream
+  namespace: nodejs
 spec:
   ports:
   - port: 8080
@@ -25,7 +25,7 @@ metadata:
   labels:
     app: musixtream
   name: musixtream
-  namespace: musixtream
+  namespace: nodejs
 spec:
   replicas: 1
   selector:
