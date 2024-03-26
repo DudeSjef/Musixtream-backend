@@ -40,7 +40,7 @@ jobs:
           command: |
             docker build -t $DOCKER_LOGIN/$APP_NAME:$CIRCLE_SHA1 .
             echo $AZURE_SP_PASSWORD | docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
-            docker push $DOCKER_LOGIN/$APP_NAME:$CIRCLE_SHA1
+            docker push $DOCKER_LOGIN/$APP_NAME:latest
   aks-deploy:
     docker:
       - image: cimg/openjdk:21.0.2
@@ -83,8 +83,8 @@ jobs:
       - run:
           name: Bump Docker Tag.
           command: |
-            cd manifests
-            kustomize edit set image $APP_NAME=$ACR_LOGIN_SERVER/$APP_NAME:$CIRCLE_SHA1
+            cd kubernetes
+            kustomize edit set image $APP_NAME=$ACR_LOGIN_SERVER/$APP_NAME:latest
             kustomize build . > $APP_NAME.yaml
       - add_ssh_keys:
           fingerprints:
