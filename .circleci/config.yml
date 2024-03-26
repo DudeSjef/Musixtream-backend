@@ -98,6 +98,9 @@ workflows:
             - run:
                name: Grade build
                command: ./gradlew clean build
+          executor:
+            docker:
+              - image: cimg/openjdk:21.0.2
           image: $DOCKER_LOGIN/$APP_NAME
           tag: $CIRCLE_SHA1,latest
           requires:
