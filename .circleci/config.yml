@@ -84,7 +84,7 @@ jobs:
           name: Bump Docker Tag.
           command: |
             cd kubernetes
-            kustomize edit set image $APP_NAME=$ACR_LOGIN_SERVER/$APP_NAME:latest
+            kustomize edit set image $APP_NAME=$DOCKER_LOGIN/$APP_NAME:latest
             kustomize build . > $APP_NAME.yaml
       - add_ssh_keys:
           fingerprints:
