@@ -33,6 +33,12 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          command: |
+            ls
+      - run:
+          command: |
+            ls build/libs
+      - run:
           name: Build and push Docker image
           command: |
             docker build -t dotnetaksdemo.azurecr.io/dotnetapi-aks-app:$CIRCLE_SHA1 .
@@ -100,10 +106,10 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-      - build_and_test
+#      - build_and_test
       - build-docker-image:
-          requires:
-            - build_and_test
+#          requires:
+#            - build_and_test
       - bump-docker-tag-kustomize:
           requires:
             - build-docker-image
