@@ -86,9 +86,9 @@ workflows:
     jobs:
       - build_and_test
       - docker/publish:
-          docker:
-              image: cimg/openjdk:21.0.2
           before_build:
+            - docker:
+                image: cimg/openjdk:21.0.2
             - run:
                 name: Calculate cache key
                 command: |-
@@ -97,6 +97,9 @@ workflows:
             - restore_cache:
                 name: Restore cache
                 key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+            - run:
+               name: Grade build
+               command: ./gradlew clean build
           image: $DOCKER_LOGIN/$APP_NAME
           tag: $CIRCLE_SHA1,latest
           requires:
