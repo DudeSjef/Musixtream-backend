@@ -6,9 +6,6 @@ resources:
 - namespace.yaml
 namespace: nodejs
 images:
-- name: musixtream
-  newName: musixtream
-  newTag: v1
 - name: musixtream-backend
   newName: /musixtream-backend
   newTag: latest
