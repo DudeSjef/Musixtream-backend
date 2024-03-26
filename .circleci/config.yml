@@ -106,10 +106,7 @@ jobs:
 workflows:
   build-test-deploy:
     jobs:
-#      - build_and_test
       - build-docker-image:
-#          requires:
-#            - build_and_test
       - bump-docker-tag-kustomize:
           requires:
             - build-docker-image
