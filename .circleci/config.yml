@@ -87,8 +87,6 @@ workflows:
       - build_and_test
       - docker/publish:
           before_build:
-            - docker:
-                image: cimg/openjdk:21.0.2
             - run:
                 name: Calculate cache key
                 command: |-
