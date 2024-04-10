@@ -72,9 +72,13 @@ workflows:
     jobs:
       - build-and-test
       - build-docker-image:
+          context:
+            - Musixtream
           requires:
             - build-and-test
       - aks-deploy:
+          context:
+            - Musixtream
           cluster-name: $CLUSTER_NAME
           resource-group: $RESOURCE_GROUP
           requires:
