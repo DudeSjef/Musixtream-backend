@@ -67,39 +67,6 @@ jobs:
       - kubernetes/create-or-update-resource:
           resource-file-path: kubernetes/$APP_NAME.yaml
           resource-name: kustomization/$APP_NAME
-  bump-docker-tag-kustomize:
-    docker:
-      - image: cimg/openjdk:21.0.2
-    steps:
-      - run:
-          name: Install kustomize
-          command: |
-            URL=https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v4.5.2/kustomize_v4.5.2_linux_amd64.tar.gz
-            curl -L $URL | tar zx
-            [ -w /usr/local/bin ] && SUDO="" || SUDO=sudo
-            $SUDO chmod +x ./kustomize
-            $SUDO mv ./kustomize /usr/local/bin
-      - checkout
-      - run:
-          name: Bump Docker Tag.
-          command: |
-            cd kubernetes
-            kustomize edit set image $APP_NAME=$DOCKER_LOGIN/$APP_NAME:latest
-            kustomize build . > $APP_NAME.yaml
-      - add_ssh_keys:
-          fingerprints:
-            - "$SSH_FINGERPRINT"
-      - run:
-          name: Commit & Push to GitHub
-          command: |
-            git config user.email "$GITHUB_EMAIL"
-            git config user.name "CircleCI User"
-            git checkout $CIRCLE_BRANCH           
-            git add kubernetes/$APP_NAME.yaml
-            git add kubernetes/kustomization.yaml
-            git commit -am "Bumps docker tag [skip ci]"
-            git push origin $CIRCLE_BRANCH
-
 workflows:
   build-test-deploy:
     jobs:
@@ -107,11 +74,8 @@ workflows:
       - build-docker-image:
           requires:
             - build_and_test
-      - bump-docker-tag-kustomize:
-          requires:
-            - build-docker-image
       - aks-deploy:
           cluster-name: $CLUSTER_NAME
           resource-group: $RESOURCE_GROUP
           requires:
-            - bump-docker-tag-kustomize
+            - build-docker-image
