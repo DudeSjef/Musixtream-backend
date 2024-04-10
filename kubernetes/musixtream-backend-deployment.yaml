@@ -3,28 +3,24 @@ kind: Deployment
 metadata:
   name: musixtream
   namespace: musixtream
-  labels:
-    app: musixtream
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: musixtream
+      tier: backend
   template:
     metadata:
-      name: musixtream
       labels:
         app: musixtream
+        tier: backend
     spec:
       containers:
         - name: musixtream
           image: dudesjef/musixtream-backend
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
           imagePullPolicy: IfNotPresent
-          resources:
-            limits:
-              memory: 200Mi
-              cpu: "0.5"
       restartPolicy: Always
       automountServiceAccountToken: false

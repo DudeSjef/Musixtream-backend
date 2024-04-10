@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- musixtream-deployment.yaml
-- musixtream-svc.yaml
+- musixtream-backend-deployment.yaml
+- musixtream-backend-service.yaml
 - namespace.yaml
 namespace: musixtream
 images:
