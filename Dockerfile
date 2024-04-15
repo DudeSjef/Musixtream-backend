@@ -1,6 +1,5 @@
 FROM eclipse-temurin:21
-RUN mkdir /opt/app
-ENV PORT 8080
+RUN mkdir /app
+COPY /build/libs/Musixtream.jar /app
+CMD ["java", "-jar", "/app/Musixtream.jar"]
 EXPOSE 8080
-COPY /build/libs/Musixtream.jar /opt/app
-CMD ["java", "-jar", "/opt/app/Musixtream.jar"]
