@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: musixtream
+  name: musixtream-backend
   namespace: musixtream
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: musixtream
@@ -16,11 +16,11 @@ spec:
         tier: backend
     spec:
       containers:
-        - name: musixtream
+        - name: musixtream-backend
           image: dudesjef/musixtream-backend
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8080
-          imagePullPolicy: IfNotPresent
       restartPolicy: Always
       automountServiceAccountToken: false

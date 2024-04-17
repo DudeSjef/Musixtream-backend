@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: musixtream
+  name: musixtream-backend
   namespace: musixtream
 spec:
   selector:
@@ -10,5 +10,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: http
-  
+      targetPort: 8080
