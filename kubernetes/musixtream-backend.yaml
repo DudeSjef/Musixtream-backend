@@ -17,7 +17,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,9 +39,9 @@ spec:
       containers:
         - name: musixtream-backend
           image: dudesjef/musixtream-backend
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
       restartPolicy: Always
       automountServiceAccountToken: false
