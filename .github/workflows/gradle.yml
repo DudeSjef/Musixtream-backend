@@ -1,4 +1,4 @@
-name: Musixtream-backend integration
+name: Gradle build
 
 on:
   push:
