@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: [ "Gradle build" ]
     types: [ completed ]
-    branches: [ "main" ]
+    branches: main
 
 jobs:
   build:
@@ -33,6 +33,7 @@ jobs:
           retention-days: 5
 
   docker-upload:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
