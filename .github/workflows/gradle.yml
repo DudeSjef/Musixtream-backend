@@ -26,4 +26,4 @@ jobs:
       - name: Build with Gradle
         run: gradle build
       - name: Generate and submit dependency graph
-        uses: gradle/actions/dependency-submission@v4
+        uses: mikepenz/gradle-dependency-submission@v1.0.0
