@@ -8,7 +8,7 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  name: musixtream-backend
+  name: musixtream-backend-service
   namespace: musixtream
 spec:
   selector:
@@ -45,3 +45,21 @@ spec:
               containerPort: 8080
       restartPolicy: Always
       automountServiceAccountToken: false
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: musixtream-backend-ingress
+  namespace: musixtream
+spec:
+  rules:
+    - host: musixtream.com
+      http:
+        paths:
+          - path: /api/*
+            pathType: Prefix
+            backend:
+              service:
+                name: musixtream-backend-service
+                port:
+                  number: 80
