@@ -16,6 +16,7 @@ spec:
     tier: backend
   ports:
     - protocol: TCP
+      name: http
       port: 80
       targetPort: 8080
 ---
@@ -53,10 +54,10 @@ metadata:
   namespace: musixtream
 spec:
   rules:
-    - host: musixtream.com
+    - host: api.musixtream
       http:
         paths:
-          - path: /api/*
+          - path: /api/
             pathType: Prefix
             backend:
               service:
