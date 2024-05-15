@@ -4,7 +4,7 @@ metadata:
   name: musixtream-backend-service
   namespace: musixtream
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: musixtream
     tier: backend
