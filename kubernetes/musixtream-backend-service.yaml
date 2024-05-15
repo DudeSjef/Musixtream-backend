@@ -4,7 +4,6 @@ metadata:
   name: musixtream-backend-service
   namespace: musixtream
 spec:
-  type: LoadBalancer
   selector:
     app: musixtream
     tier: backend
