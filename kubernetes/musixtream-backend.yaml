@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: musixtream
+  labels:
+    name: musixtream
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: musixtream-backend
+  namespace: musixtream
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: musixtream
+  template:
+    metadata:
+      labels:
+        app: musixtream
+    spec:
+      serviceAccountName: musixtream-service-account
+      restartPolicy: Always
+      automountServiceAccountToken: false
+      containers:
+        - name: musixtream-backend
+          image: dudesjef/musixtream-backend
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: musixtream-backend-service
+  namespace: musixtream
+  labels:
+    app: musixtream
+    service: musixtream-backend-service
+spec:
+  selector:
+    app: musixtream
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 8080
