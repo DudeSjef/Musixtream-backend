@@ -2,7 +2,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
   name: musixtream-gateway-class
-  namespace: musixtream
 spec:
   controllerName: gateway.envoyproxy.io/gatewayclass-controller
 ---
@@ -10,7 +9,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: musixtream-gateway
-  namespace: musixtream
 spec:
   gatewayClassName: musixtream-gateway-class
   listeners:
@@ -21,8 +19,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: musixtream-http-route
-  namespace: musixtream
+  name: musixtream-httproute
 spec:
   parentRefs:
     - name: musixtream-gateway
@@ -42,4 +39,3 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: musixtream-service-account
-  namespace: musixtream
