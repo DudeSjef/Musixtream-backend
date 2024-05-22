@@ -13,14 +13,21 @@ spec:
         app: musixtream
     spec:
       restartPolicy: Always
-      automountServiceAccountToken: false
       containers:
         - name: musixtream-backend
           image: dudesjef/musixtream-backend
           imagePullPolicy: Always
           ports:
-            - name: http
-              containerPort: 8080
+            - containerPort: 8080
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
 ---
 apiVersion: v1
 kind: Service
@@ -33,7 +40,6 @@ spec:
   selector:
     app: musixtream
   ports:
-    - protocol: TCP
-      name: http
-      port: 80
+    - name: http
+      port: 8080
       targetPort: 8080
