@@ -1,16 +1,16 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
-  name: musixtream-gateway-class
+  name: eg
 spec:
   controllerName: gateway.envoyproxy.io/gatewayclass-controller
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: musixtream-gateway
+  name: eg
 spec:
-  gatewayClassName: musixtream-gateway-class
+  gatewayClassName: eg
   listeners:
     - name: http
       protocol: HTTP
@@ -22,7 +22,7 @@ metadata:
   name: musixtream-httproute
 spec:
   parentRefs:
-    - name: musixtream-gateway
+    - name: eg
   rules:
     - backendRefs:
         - group: ""
