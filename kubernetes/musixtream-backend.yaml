@@ -12,7 +12,6 @@ spec:
       labels:
         app: musixtream
     spec:
-      serviceAccountName: musixtream-service-account
       restartPolicy: Always
       automountServiceAccountToken: false
       containers:
